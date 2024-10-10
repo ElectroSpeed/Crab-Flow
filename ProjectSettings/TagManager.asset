@@ -3,15 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - StaticCrab
+  - Crab
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Crab
   - Water
   - UI
-  - 
+  - StaticCrab
   - 
   - 
   - 
