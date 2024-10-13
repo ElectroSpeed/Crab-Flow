@@ -89,6 +89,10 @@ public class CrabLink : MonoBehaviour
     private void Update()
     {
         UpdateLinkPositions();
+    }
+
+    private void FixedUpdate()
+    {
         ApplySpringForce();
     }
 }

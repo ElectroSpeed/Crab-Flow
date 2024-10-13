@@ -6,14 +6,17 @@ TagManager:
   tags:
   - StaticCrab
   - Crab
+  - CrabLink
+  - WorldLevel
+  - Land
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Crab
+  - 
   - Water
   - UI
-  - StaticCrab
+  - 
   - 
   - 
   - 

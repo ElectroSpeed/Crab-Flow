@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Crab : MonoBehaviour
@@ -116,6 +117,7 @@ public class Crab : MonoBehaviour
     {
         if (_canDisconnected || this.CompareTag("Crab"))
         {
+
             this.GetComponent<Renderer>().material = _crabDisconnected;
             this.tag = "Crab";
             DisconnectAllLinks();
@@ -151,6 +153,23 @@ public class Crab : MonoBehaviour
                 _linkDetected--;
                 _linkPotentials.Remove(otherCrab);
             }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Land") && this.CompareTag("StaticCrab"))
+        {
+            _crab.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Land") && this.CompareTag("Crab"))
+        {
+            _crab.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+            _crab.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ;
         }
     }
 
