@@ -22,7 +22,7 @@ public class LevelRotation : MonoBehaviour
         for (int i = 0; i < _levels.Length; i++)
         {
             float angle = i * Mathf.PI * 2f / _levels.Length;
-            Vector3 newPos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * _distanceFromCenter;
+            Vector3 newPos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * (_distanceFromCenter * (i+1));
             _levels[i].position = _center.position + newPos;
         }
     }

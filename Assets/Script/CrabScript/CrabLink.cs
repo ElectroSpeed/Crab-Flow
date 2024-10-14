@@ -4,10 +4,12 @@ public class CrabLink : MonoBehaviour
 {
     public Crab _firstCrab;
     public Crab _secondCrab;
+    public bool _isVisual = false;
+
     private LineRenderer _lineRenderer;
     private float _maxLinkDistance;
     private float _crabDistance;
-    private float _springForce = 300;
+    private float _springForce = 100;
     private float _dampingFactor = 3f;
 
     public void InitializeLink(Crab firstCrab, Crab secondCrab, GameObject linkPrefab)
@@ -17,19 +19,28 @@ public class CrabLink : MonoBehaviour
         _maxLinkDistance = firstCrab._radiusZoneLink + 1f;
         _crabDistance = Vector3.Distance(_firstCrab.transform.position, _secondCrab.transform.position);
 
-        _lineRenderer = GetComponent<LineRenderer>();
-
-        if (_lineRenderer == null)
-        {
-            _lineRenderer = gameObject.AddComponent<LineRenderer>();
-        }
-
+        _lineRenderer = GetComponent<LineRenderer>() ?? gameObject.AddComponent<LineRenderer>();
         linkPrefab.transform.position = secondCrab.transform.position;
 
         UpdateLinkPositions();
 
         firstCrab.AddLink(this);
         secondCrab.AddLink(this);
+    }
+
+    public void InitializeVisualLink(Crab firstCrab, Crab secondCrab, GameObject linkPrefab)
+    {
+        _isVisual = true;
+        _firstCrab = firstCrab;
+        _secondCrab = secondCrab;
+
+        _lineRenderer = GetComponent<LineRenderer>() ?? gameObject.AddComponent<LineRenderer>();
+        linkPrefab.transform.position = secondCrab.transform.position;
+
+        UpdateLinkPositions();
+
+        firstCrab.AddVisualLink(this);
+        secondCrab.AddVisualLink(this);
     }
 
     public void UpdateLinkPositions()
@@ -41,15 +52,9 @@ public class CrabLink : MonoBehaviour
         }
     }
 
-    public Crab GetFirstCrab()
-    {
-        return _firstCrab;
-    }
+    public Crab GetFirstCrab() => _firstCrab;
 
-    public Crab GetSecondCrab()
-    {
-        return _secondCrab;
-    }
+    public Crab GetSecondCrab() => _secondCrab;
 
     public void DestroyLink()
     {
@@ -65,14 +70,13 @@ public class CrabLink : MonoBehaviour
         Vector3 direction = _secondCrab.transform.position - _firstCrab.transform.position;
         float currentDistance = direction.magnitude;
 
-        if (currentDistance > _maxLinkDistance)
+        if (currentDistance > _maxLinkDistance * 2)
         {
             ConnectionManager.Instance.DestroyCrabLink(this);
             return;
         }
 
         direction.Normalize();
-
         float distanceDelta = currentDistance - _crabDistance;
         Vector3 force = direction * (distanceDelta * _springForce);
 
@@ -93,6 +97,9 @@ public class CrabLink : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ApplySpringForce();
+        if (!_isVisual)
+        {
+            ApplySpringForce();
+        }
     }
 }

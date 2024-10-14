@@ -5,25 +5,21 @@ using UnityEngine;
 public class Crab : MonoBehaviour
 {
     private GameObject _crab;
-    [SerializeField] private string _crabName;
+    private SphereCollider _crabDetectionZone;
+    private bool _canBeLinked = false;
+    private bool _canCreateVisualLink = true;
+    private int _linkDetected = 0;
 
+    [SerializeField] private string _crabName;
     [SerializeField] private int _minimumFirstNumberLink;
     [SerializeField] private int _maximumFirstNumberLink;
 
-    [SerializeField] private Material _crabConnected;
-    [SerializeField] private Material _crabDisconnected;
-
     public int _radiusZoneLink;
-
-    private SphereCollider _crabDetectionZone;
-
     public bool _canDisconnected;
     public bool _canConductCurrent;
     public bool _isInvulnerable;
 
-    private bool _canBeLinked = false;
-    private int _linkDetected = 0;
-
+    public List<CrabLink> _visualLink = new List<CrabLink>();
     public List<CrabLink> _linkList = new List<CrabLink>();
     public List<Crab> _crabsLinked = new List<Crab>();
     public List<Crab> _linkPotentials = new List<Crab>();
@@ -35,6 +31,7 @@ public class Crab : MonoBehaviour
         _crabDetectionZone.radius = 0.5f;
         _crabDetectionZone.isTrigger = false;
     }
+
 
     public void CrabConnection(Crab connectedCrab, Crab tiedCrab)
     {
@@ -98,17 +95,33 @@ public class Crab : MonoBehaviour
         }
     }
 
+    public void AddVisualLink(CrabLink link)
+    {
+        if (!_visualLink.Contains(link))
+        {
+            _visualLink.Add(link);
+        }
+    }
+
+    public void RemoveVisualLink(CrabLink link)
+    {
+        if (_visualLink.Contains(link))
+        {
+            _visualLink.Remove(link);
+        }
+    }
+
     private void OnMouseUp()
     {
         if (_canBeLinked)
         {
+            DestroyVisualLink();
             foreach (Crab potentialCrab in _linkPotentials)
             {
                 CrabConnection(this, potentialCrab);
             }
             _linkPotentials.Clear();
             this.tag = "StaticCrab";
-            this.GetComponent<Renderer>().material = _crabConnected;
         }
         ResetDetectionZone();
     }
@@ -117,8 +130,6 @@ public class Crab : MonoBehaviour
     {
         if (_canDisconnected || this.CompareTag("Crab"))
         {
-
-            this.GetComponent<Renderer>().material = _crabDisconnected;
             this.tag = "Crab";
             DisconnectAllLinks();
             ExpandDetectionZone();
@@ -128,7 +139,43 @@ public class Crab : MonoBehaviour
     private void OnMouseDrag()
     {
         _canBeLinked = _linkDetected >= _minimumFirstNumberLink && _linkDetected <= _maximumFirstNumberLink;
+        if(_canBeLinked)
+        {
+            CreateVisualLink();
+        }
+        else
+        {
+            DestroyVisualLink();
+        }
     }
+    
+    private void CreateVisualLink()
+    {
+        if(_canCreateVisualLink)
+        {
+            _canCreateVisualLink = false;
+            foreach (Crab potentialCrab in _linkPotentials)
+            {
+                ConnectionManager.Instance.CreateVisualCrabLink(this, potentialCrab);
+            }
+        }
+    }
+
+    private void DestroyVisualLink()
+    {
+        if (!_canCreateVisualLink && _visualLink != null)
+        {
+            List<CrabLink> visualLinksCopy = new List<CrabLink>(_visualLink);
+
+            foreach (CrabLink visualLink in visualLinksCopy)
+            {
+                ConnectionManager.Instance.DestroyVisualCrabLink(visualLink);
+            }
+
+            _canCreateVisualLink = true;
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -162,14 +209,18 @@ public class Crab : MonoBehaviour
         {
             _crab.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            collision.gameObject.GetComponent<SphereCollider>().enabled = false;
+            Debug.Log("Win");
+        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Land") && this.CompareTag("Crab"))
         {
-            _crab.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
-            _crab.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ;
+            _crab.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
         }
     }
 
@@ -181,7 +232,7 @@ public class Crab : MonoBehaviour
 
     private void ExpandDetectionZone()
     {
-        _crabDetectionZone.radius = _radiusZoneLink;
+        _crabDetectionZone.radius = _radiusZoneLink * 2;
         _crabDetectionZone.isTrigger = true;
     }
 }
