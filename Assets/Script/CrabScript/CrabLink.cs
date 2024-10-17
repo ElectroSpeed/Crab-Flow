@@ -9,7 +9,7 @@ public class CrabLink : MonoBehaviour
     private LineRenderer _lineRenderer;
     private float _maxLinkDistance;
     private float _crabDistance;
-    private float _springForce = 100;
+    private float _springForce = 300;
     private float _dampingFactor = 3f;
 
     public void InitializeLink(Crab firstCrab, Crab secondCrab, GameObject linkPrefab)

@@ -6,22 +6,40 @@ public class DragAndDrop : MonoBehaviour
 {
     public Vector3 _mousePosition;
 
+    private Camera _cam;
+    private LayerMask _layerMask = 1 << 3;
+
+    private void Start()
+    {
+        _cam = Camera.main;
+    }
+
     private Vector3 GetMousePosition()
     {
-        return Camera.main.WorldToScreenPoint(transform.position);
+        return _cam.WorldToScreenPoint(transform.position);
     }
 
     private void OnMouseDown()
     {
         _mousePosition = Input.mousePosition - GetMousePosition();
-        this.GetComponent<SphereCollider>().isTrigger = false;
     }
 
     private void OnMouseDrag()
     {
-        if (gameObject.GetComponent<Crab>()._canDisconnected || gameObject.CompareTag("Crab"))
+        Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (!Physics.Raycast(ray, out hit, Mathf.Infinity, _layerMask))
         {
-            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition - _mousePosition);
+            this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+            if (gameObject.GetComponent<Crab>()._canDisconnected || gameObject.CompareTag("Crab"))
+            {
+                transform.position = _cam.ScreenToWorldPoint(Input.mousePosition - _mousePosition);
+            }
+        }
+        else
+        {
+            this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
     }
 }

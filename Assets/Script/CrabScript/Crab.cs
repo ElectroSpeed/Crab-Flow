@@ -123,6 +123,13 @@ public class Crab : MonoBehaviour
             _linkPotentials.Clear();
             this.tag = "StaticCrab";
         }
+        else
+        {
+            if(_canDisconnected)
+            {
+                _crab.transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+        }
         ResetDetectionZone();
     }
 
@@ -130,6 +137,7 @@ public class Crab : MonoBehaviour
     {
         if (_canDisconnected || this.CompareTag("Crab"))
         {
+            _crab.transform.eulerAngles = new Vector3(90, 180, 0);
             this.tag = "Crab";
             DisconnectAllLinks();
             ExpandDetectionZone();
@@ -232,7 +240,7 @@ public class Crab : MonoBehaviour
 
     private void ExpandDetectionZone()
     {
-        _crabDetectionZone.radius = _radiusZoneLink * 2;
+        _crabDetectionZone.radius = _radiusZoneLink;
         _crabDetectionZone.isTrigger = true;
     }
 }

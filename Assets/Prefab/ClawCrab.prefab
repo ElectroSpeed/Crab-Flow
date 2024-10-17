@@ -3716,9 +3716,9 @@ GameObject:
   - component: {fileID: 1152419521883881177}
   - component: {fileID: -1354480351136820793}
   - component: {fileID: -8601500169550496120}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ClawCrab
-  m_TagString: Crab
+  m_TagString: StaticCrab
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3731,14 +3731,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7398937013360788884}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4148730135637890771}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
 --- !u!95 &3016769600749692925
 Animator:
   serializedVersion: 5
@@ -3813,6 +3813,7 @@ MonoBehaviour:
   _canDisconnected: 0
   _canConductCurrent: 0
   _isInvulnerable: 1
+  _visualLink: []
   _linkList: []
   _crabsLinked: []
   _linkPotentials: []

@@ -16,6 +16,7 @@ public class MenuEvents : MonoBehaviour
     [SerializeField] GameObject _pauseMenu;
     [SerializeField] GameObject _settingsMenu;
     [SerializeField] GameObject _startMenu;
+    [SerializeField] GameObject _allLevels;
 
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class MenuEvents : MonoBehaviour
     {
         if (!_startIsActive)
         {
+            _allLevels.SetActive(false);
             _startMenu.SetActive(true);
             _startIsActive = true;
             return;
@@ -45,6 +47,7 @@ public class MenuEvents : MonoBehaviour
         else
         {
             _startMenu.SetActive(false);
+            _allLevels.SetActive(true);
             _startIsActive = false;
             return;
         }
@@ -58,6 +61,12 @@ public class MenuEvents : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+
+    public void PlayScene(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
+
     public void PauseMenu()
     {
         if (!_pauseIsActive)

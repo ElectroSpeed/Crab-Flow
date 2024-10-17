@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2999373681029028235}
   - component: {fileID: 6282832751127259482}
   - component: {fileID: 6937687793302816712}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ElectricCrabLink
   m_TagString: CrabLink
   m_Icon: {fileID: 0}
