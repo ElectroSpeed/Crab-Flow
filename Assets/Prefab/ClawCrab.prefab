@@ -3718,7 +3718,7 @@ GameObject:
   - component: {fileID: -8601500169550496120}
   m_Layer: 8
   m_Name: ClawCrab
-  m_TagString: StaticCrab
+  m_TagString: Crab
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3779,7 +3779,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: -0.5}
 --- !u!114 &1152419521883881177
 MonoBehaviour:
@@ -3813,6 +3813,7 @@ MonoBehaviour:
   _canDisconnected: 0
   _canConductCurrent: 0
   _isInvulnerable: 1
+  _isSteelCrab: 0
   _visualLink: []
   _linkList: []
   _crabsLinked: []
@@ -3825,7 +3826,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7398937013360788884}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5000000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

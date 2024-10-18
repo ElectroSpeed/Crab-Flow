@@ -8,7 +8,7 @@ public class Zoom : MonoBehaviour
     private Transform _startCameraPosition;
     private Quaternion _cameraRotation;
     private float _zoomTime = 0f;
-    private float _zoomDuration = 3f;  // Durée en secondes pour le zoom (1 seconde ici)
+    private float _zoomDuration = 3f;
     private bool _isZooming = false;
 
     public static Zoom Instance;
@@ -29,16 +29,13 @@ public class Zoom : MonoBehaviour
     {
         if (_isZooming)
         {
-            // Incrémenter le temps en fonction du temps réel écoulé, divisé par la durée du zoom
             _zoomTime += Time.deltaTime / _zoomDuration;
 
-            // Interpolation de la position
             transform.position = Vector3.Lerp(_startCameraPosition.position, _targetCameraPosition.position, _zoomTime);
 
-            // Interpolation de la rotation
+            _cameraRotation = Quaternion.Euler(_targetCameraPosition.eulerAngles.x, _targetCameraPosition.parent.eulerAngles.y, 0);
             transform.rotation = Quaternion.Lerp(_startCameraPosition.rotation, _cameraRotation, _zoomTime);
 
-            // Si l'interpolation est terminée (le zoomTime atteint ou dépasse 1)
             if (_zoomTime >= 1f)
             {
                 _isZooming = false;
@@ -60,11 +57,7 @@ public class Zoom : MonoBehaviour
         _targetCameraPosition = targetCameraPosition;
         _startCameraPosition = this.transform;
 
-        _cameraRotation = Quaternion.Euler(
-            _targetCameraPosition.eulerAngles.x,
-            _targetCameraPosition.parent.eulerAngles.y,
-            0
-        );
+        _cameraRotation = Quaternion.Euler(_targetCameraPosition.eulerAngles.x, _targetCameraPosition.parent.eulerAngles.y, 0);
 
         _zoomTime = 0f;
         _isZooming = true;

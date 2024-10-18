@@ -8,7 +8,9 @@ public class Crab : MonoBehaviour
     private SphereCollider _crabDetectionZone;
     private bool _canBeLinked = false;
     private bool _canCreateVisualLink = true;
+    private bool _onDrag = false;
     private int _linkDetected = 0;
+    private Animator _animator;
 
     [SerializeField] private string _crabName;
     [SerializeField] private int _minimumFirstNumberLink;
@@ -18,6 +20,7 @@ public class Crab : MonoBehaviour
     public bool _canDisconnected;
     public bool _canConductCurrent;
     public bool _isInvulnerable;
+    public bool _isSteelCrab;
 
     public List<CrabLink> _visualLink = new List<CrabLink>();
     public List<CrabLink> _linkList = new List<CrabLink>();
@@ -30,8 +33,44 @@ public class Crab : MonoBehaviour
         _crabDetectionZone = GetComponent<SphereCollider>();
         _crabDetectionZone.radius = 0.5f;
         _crabDetectionZone.isTrigger = false;
+        _animator = this.GetComponent<Animator>();
+        if (_isSteelCrab)
+        {
+            InitialiseSteelLink();
+        }
     }
 
+    private void Update()
+    {
+        if (_linkList.Count <= 1 && _crab.layer != 8)
+        {
+            if (!_onDrag)
+            {
+                _crab.transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+        }
+        else
+        {
+            _crab.transform.eulerAngles = new Vector3(90, 180, 0);
+        }
+    }
+
+    private void InitialiseSteelLink()
+    {
+        int layer = 9;
+
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+        List<GameObject> steelCrabs = new List<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.layer == layer && obj != this)
+            {
+                steelCrabs.Add(obj);
+                ConnectionManager.Instance.CreateSteelCrabLink(this, obj.GetComponent<Crab>());
+            }
+        }
+    }
 
     public void CrabConnection(Crab connectedCrab, Crab tiedCrab)
     {
@@ -92,6 +131,12 @@ public class Crab : MonoBehaviour
         if (_linkList.Contains(link))
         {
             _linkList.Remove(link);
+            if (_linkList.Count == 1)
+            {
+                _crab.transform.eulerAngles = new Vector3(90, 180, 0);
+                this.tag = "Crab";
+                DisconnectAllLinks();
+            }
         }
     }
 
@@ -113,6 +158,7 @@ public class Crab : MonoBehaviour
 
     private void OnMouseUp()
     {
+        _animator.SetInteger("State", 0);
         if (_canBeLinked)
         {
             DestroyVisualLink();
@@ -130,6 +176,7 @@ public class Crab : MonoBehaviour
                 _crab.transform.eulerAngles = new Vector3(0, 0, 0);
             }
         }
+        _onDrag = false;
         ResetDetectionZone();
     }
 
@@ -137,8 +184,10 @@ public class Crab : MonoBehaviour
     {
         if (_canDisconnected || this.CompareTag("Crab"))
         {
+            _onDrag = true;
             _crab.transform.eulerAngles = new Vector3(90, 180, 0);
             this.tag = "Crab";
+            _animator.SetInteger("State", 1);
             DisconnectAllLinks();
             ExpandDetectionZone();
         }
@@ -217,9 +266,10 @@ public class Crab : MonoBehaviour
         {
             _crab.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
-        if (collision.gameObject.CompareTag("Finish"))
+        if (collision.gameObject.CompareTag("Finish") && this.CompareTag("StaticCrab"))
         {
             collision.gameObject.GetComponent<SphereCollider>().enabled = false;
+            MenuEvents.Instance.WinMenu();
             Debug.Log("Win");
         }
     }
@@ -234,13 +284,13 @@ public class Crab : MonoBehaviour
 
     private void ResetDetectionZone()
     {
-        _crabDetectionZone.radius = 0.5f;
+        _crabDetectionZone.radius = 0.8f;
         _crabDetectionZone.isTrigger = false;
     }
 
     private void ExpandDetectionZone()
     {
-        _crabDetectionZone.radius = _radiusZoneLink;
+        _crabDetectionZone.radius = _radiusZoneLink * 2;
         _crabDetectionZone.isTrigger = true;
     }
 }

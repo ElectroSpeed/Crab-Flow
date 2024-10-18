@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2579973761964064511}
   - component: {fileID: 5634226547995968768}
   - component: {fileID: 1355967739145326787}
+  - component: {fileID: 6937332255550579339}
   m_Layer: 0
   m_Name: WallStone
   m_TagString: Untagged
@@ -102,8 +103,29 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: -1
   m_Mesh: {fileID: -5567913062341607129, guid: bd66a4f5ceccf624197dd8bf167744b1, type: 3}
+--- !u!65 &6937332255550579339
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078489299152282996}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.12368532, y: 0.28233576, z: 0.21716128}
+  m_Center: {x: -0.00022529064, y: -0.07492239, z: 0.047871344}

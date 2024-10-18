@@ -19,8 +19,11 @@ public class LevelSelection : MonoBehaviour
 
     private void OnLevelSelected(string name)
     {
-        _levelPanel.SetActive(false);
-        _worldPanel.SetActive(true);
-        Zoom.Instance.ZoomTo(this.transform.GetChild(0).transform);
+        if (!MenuEvents.Instance._startIsActive)
+        {
+            _levelPanel.SetActive(false);
+            _worldPanel.SetActive(true);
+            Zoom.Instance.ZoomTo(this.transform.GetChild(0).transform);
+        }
     }
 }

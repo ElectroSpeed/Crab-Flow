@@ -1951,7 +1951,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: -0.5}
 --- !u!114 &-6056097292843512077
 MonoBehaviour:
@@ -1985,6 +1985,8 @@ MonoBehaviour:
   _canDisconnected: 1
   _canConductCurrent: 1
   _isInvulnerable: 0
+  _isSteelCrab: 0
+  _visualLink: []
   _linkList: []
   _crabsLinked: []
   _linkPotentials: []

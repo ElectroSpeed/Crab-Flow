@@ -4,6 +4,7 @@ public class ConnectionManager : MonoBehaviour
 {
     public static ConnectionManager Instance;
     [SerializeField] private GameObject _linkCrabPrefab;
+    [SerializeField] private GameObject _linkSteelCrabPrefab;
     [SerializeField] private GameObject _visualLinkCrabPrefab;
 
     private void Awake()
@@ -16,6 +17,13 @@ public class ConnectionManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void CreateSteelCrabLink(Crab firstCrab, Crab secondCrab)
+    {
+        GameObject linkObject = Instantiate(_linkSteelCrabPrefab);
+        CrabLink crabLink = linkObject.AddComponent<CrabLink>();
+        crabLink.InitializeVisualLink(firstCrab, secondCrab, linkObject);
     }
 
     public void CreateCrabLink(Crab firstCrab, Crab secondCrab)
