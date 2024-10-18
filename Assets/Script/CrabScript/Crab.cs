@@ -188,6 +188,7 @@ public class Crab : MonoBehaviour
             _crab.transform.eulerAngles = new Vector3(90, 180, 0);
             this.tag = "Crab";
             _animator.SetInteger("State", 1);
+            AudioManagerSave.Instance.PlaySFX("Crab");
             DisconnectAllLinks();
             ExpandDetectionZone();
         }

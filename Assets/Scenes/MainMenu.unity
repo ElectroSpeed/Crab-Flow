@@ -453,6 +453,38 @@ PrefabInstance:
       propertyPath: _audioMusic
       value: 
       objectReference: {fileID: 1480545024}
+    - target: {fileID: 1239918144277964645, guid: 5bcbb40fae53c13429d44a185753bef8, type: 3}
+      propertyPath: _sfxSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239918144277964645, guid: 5bcbb40fae53c13429d44a185753bef8, type: 3}
+      propertyPath: _musicSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239918144277964645, guid: 5bcbb40fae53c13429d44a185753bef8, type: 3}
+      propertyPath: _sfxSounds.Array.data[0]._clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1422cbc096201214899f2335570cdb7c, type: 3}
+    - target: {fileID: 1239918144277964645, guid: 5bcbb40fae53c13429d44a185753bef8, type: 3}
+      propertyPath: _sfxSounds.Array.data[0]._name
+      value: Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239918144277964645, guid: 5bcbb40fae53c13429d44a185753bef8, type: 3}
+      propertyPath: _sfxSounds.Array.data[1]._clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7324eaf534cac254685c997735b619ec, type: 3}
+    - target: {fileID: 1239918144277964645, guid: 5bcbb40fae53c13429d44a185753bef8, type: 3}
+      propertyPath: _sfxSounds.Array.data[1]._name
+      value: Crab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239918144277964645, guid: 5bcbb40fae53c13429d44a185753bef8, type: 3}
+      propertyPath: _musicSounds.Array.data[0]._clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 702f4983643271544a021b46d7f1b41f, type: 3}
+    - target: {fileID: 1239918144277964645, guid: 5bcbb40fae53c13429d44a185753bef8, type: 3}
+      propertyPath: _musicSounds.Array.data[0]._name
+      value: Plage
+      objectReference: {fileID: 0}
     - target: {fileID: 1684536880333092145, guid: 5bcbb40fae53c13429d44a185753bef8, type: 3}
       propertyPath: m_Name
       value: '||Audio Manager||'

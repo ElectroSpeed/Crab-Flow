@@ -68,6 +68,7 @@ public class ButtonCustom : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                             break;
                         case "Click":
                             ApplyImageModification(_imageList[i]._image, _imageList[i]._clickColor, _imageList[i]._clickSprite);
+                            AudioManagerSave.Instance.PlaySFX("Button");
                             break;
                     }
                 }
